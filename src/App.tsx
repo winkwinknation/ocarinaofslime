@@ -7,11 +7,13 @@ import { unlock } from './audio/engine'
 import { GameSystems } from './game/GameSystems'
 import { TitleScene } from './scenes/Title'
 import { VillageScene } from './scenes/Village'
+import { PlainsScene } from './scenes/Plains'
 import { TitleUI } from './ui/TitleUI'
 import { IntroUI } from './ui/IntroUI'
 import { HUD } from './ui/HUD'
 import { DialogueBox } from './ui/DialogueBox'
 import { PauseMenu } from './ui/PauseMenu'
+import { ChestCeremony } from './ui/ChestCeremony'
 import { TouchControls } from './input/TouchControls'
 
 const GAMEPLAY: SceneId[] = ['village', 'plains', 'dungeon', 'boss']
@@ -25,6 +27,8 @@ function SceneView() {
       return null
     case 'village':
       return <VillageScene />
+    case 'plains':
+      return <PlainsScene />
     default:
       return <VillageScene />
   }
@@ -87,6 +91,7 @@ export default function App() {
           <>
             <HUD />
             <DialogueBox />
+            <ChestCeremony />
             <TouchControls />
             <PauseMenu />
           </>

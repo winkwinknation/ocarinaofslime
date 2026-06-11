@@ -50,6 +50,17 @@ export interface EnemyRef {
 }
 export const enemies = new Map<string, EnemyRef>()
 
+/** Things the sword breaks but that don't fight back: grass, pots, etc. */
+export interface BreakableRef {
+  id: string
+  x: number
+  z: number
+  radius: number
+  broken: boolean
+  smash: () => void
+}
+export const breakables = new Map<string, BreakableRef>()
+
 export const sceneColliders: Collider[] = []
 
 export function setColliders(list: Collider[]) {
@@ -60,6 +71,7 @@ export function setColliders(list: Collider[]) {
 export function clearSceneState() {
   interactables.clear()
   enemies.clear()
+  breakables.clear()
   sceneColliders.length = 0
 }
 

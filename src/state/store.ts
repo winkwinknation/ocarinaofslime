@@ -60,6 +60,8 @@ interface GameStore {
   toast: string | null
   touchMode: boolean
   prompt: string | null
+  ceremony: { title: string; subtitle: string; onClose?: () => void } | null
+  nextSpawn: { x: number; z: number; heading: number } | null
 
   // actions
   setScene: (s: SceneId) => void
@@ -82,6 +84,9 @@ interface GameStore {
   setPrompt: (s: string | null) => void
   foundGossip: (id: string) => void
   setRecordFish: (cm: number) => void
+  showCeremony: (title: string, subtitle: string, onClose?: () => void) => void
+  closeCeremony: () => void
+  setNextSpawn: (s: { x: number; z: number; heading: number } | null) => void
   saveGame: () => void
   loadGame: () => boolean
   newGame: () => void
@@ -112,6 +117,8 @@ export const useGame = create<GameStore>((set, get) => ({
   toast: null,
   touchMode: false,
   prompt: null,
+  ceremony: null,
+  nextSpawn: null,
 
   setScene: (scene) => {
     set({ scene, dialogue: null, ocarinaOpen: false, paused: false, prompt: null })
@@ -200,6 +207,15 @@ export const useGame = create<GameStore>((set, get) => ({
     set((s) => (s.gossipFound.includes(id) ? s : { gossipFound: [...s.gossipFound, id] })),
 
   setRecordFish: (cm) => set((s) => ({ recordFish: Math.max(s.recordFish, cm) })),
+
+  showCeremony: (title, subtitle, onClose) => set({ ceremony: { title, subtitle, onClose } }),
+  closeCeremony: () => {
+    const c = get().ceremony
+    set({ ceremony: null })
+    clearPresses()
+    c?.onClose?.()
+  },
+  setNextSpawn: (nextSpawn) => set({ nextSpawn }),
 
   saveGame: () => {
     const s = get()

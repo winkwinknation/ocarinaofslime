@@ -2,7 +2,7 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { player, cam, interactables, enemies, sceneColliders } from './world'
+import { player, cam, interactables, enemies, breakables, sceneColliders } from './world'
 import { resolveCollisions, dist2 } from './collision'
 import { moveVector, consume, clearPresses } from '../input/input'
 import { useGame } from '../state/store'
@@ -34,7 +34,12 @@ export function Player() {
     const dt = Math.min(rawDt, 0.05)
     const g = useGame.getState()
     const frozen =
-      g.dialogue !== null || g.ocarinaOpen || g.paused || g.scene === 'title' || player.frozen
+      g.dialogue !== null ||
+      g.ocarinaOpen ||
+      g.paused ||
+      g.ceremony !== null ||
+      g.scene === 'title' ||
+      player.frozen
 
     // timers always tick
     if (player.attackTimer > 0) player.attackTimer -= dt
@@ -113,6 +118,13 @@ export function Player() {
             if (Math.abs(angleDiff(ang, player.heading)) < 1.25) {
               e.hit(dmg, player.pos.x, player.pos.z)
             }
+          }
+          for (const b of breakables.values()) {
+            if (b.broken) continue
+            const d2v = dist2(player.pos.x, player.pos.z, b.x, b.z)
+            if (d2v > range * range) continue
+            const ang = Math.atan2(b.x - player.pos.x, b.z - player.pos.z)
+            if (Math.abs(angleDiff(ang, player.heading)) < 1.35) b.smash()
           }
         }
       }
