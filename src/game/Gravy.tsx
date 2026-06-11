@@ -25,6 +25,8 @@ export function Gravy() {
     wingR.current.rotation.y = -0.5 - flap
 
     const g = useGame.getState()
+    // Gravy is basically all head, so big-head mode scales all of her
+    root.current.scale.setScalar(g.cheats.bighead ? 2 : 1)
     const busy = g.dialogue !== null || g.ocarinaOpen || g.paused || g.ceremony !== null
     if (!busy) {
       heyTimer.current -= dt

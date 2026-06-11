@@ -12,6 +12,10 @@ import { Grass, Pot, Chest, GossipStone, Sign, Mailbox, Hut, ExitTrigger } from 
 import { useGame } from '../state/store'
 import { dlg } from '../content/dialogue'
 import { sfx } from '../audio/notes'
+import * as events from '../game/events'
+import { player } from '../game/world'
+import { dist2 } from '../game/collision'
+import { SlimeRain } from '../game/SlimeRain'
 
 const TREES: [number, number][] = [
   [-16, -14],
@@ -73,11 +77,26 @@ function Tree({ x, z }: { x: number; z: number }) {
 }
 
 function teach(songId: string) {
-  window.dispatchEvent(new CustomEvent('teach-song', { detail: songId }))
+  events.emit('teach-song', songId)
 }
 
 export function VillageScene() {
   const smidoOpen = useGame((s) => !!s.flags['smido-open'])
+
+  // Slurpia's Song cheers up Mopey if he can hear it
+  useEffect(
+    () =>
+      events.on('song', (songId) => {
+        if (songId !== 'slurpia') return
+        const g = useGame.getState()
+        if (g.flags['mopey-cheered']) return
+        if (dist2(player.pos.x, player.pos.z, 9.6, 5.4) < 8 * 8) {
+          g.setFlag('mopey-cheered')
+          setTimeout(() => g.showToast('♪ Mopey heard that. Mopey is VIBING. Talk to him!'), 1500)
+        }
+      }),
+    [],
+  )
 
   useEffect(() => {
     const walls: Collider[] = [
@@ -361,6 +380,7 @@ export function VillageScene() {
         enabled={() => !!useGame.getState().flags['smido-open']}
       />
 
+      <SlimeRain />
       <Pickups />
       <Gravy />
       <Player />

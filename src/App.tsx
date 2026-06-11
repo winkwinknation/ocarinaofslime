@@ -14,7 +14,9 @@ import { HUD } from './ui/HUD'
 import { DialogueBox } from './ui/DialogueBox'
 import { PauseMenu } from './ui/PauseMenu'
 import { ChestCeremony } from './ui/ChestCeremony'
+import { OcarinaOverlay } from './ui/OcarinaOverlay'
 import { TouchControls } from './input/TouchControls'
+import * as events from './game/events'
 
 const GAMEPLAY: SceneId[] = ['village', 'plains', 'dungeon', 'boss']
 
@@ -58,6 +60,17 @@ export default function App() {
   const setTouchMode = useGame((s) => s.setTouchMode)
   const inGame = GAMEPLAY.includes(scene)
 
+  // song-teaching requests open the ocarina in teach mode
+  useEffect(
+    () =>
+      events.on('teach-song', (songId) => {
+        const g = useGame.getState()
+        g.setTeaching(songId as string)
+        g.setOcarinaOpen(true)
+      }),
+    [],
+  )
+
   // audio unlock on any gesture (iOS requires this) + touch detection
   useEffect(() => {
     const u = () => unlock()
@@ -93,6 +106,7 @@ export default function App() {
             <DialogueBox />
             <ChestCeremony />
             <TouchControls />
+            <OcarinaOverlay />
             <PauseMenu />
           </>
         )}

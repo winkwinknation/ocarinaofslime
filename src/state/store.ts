@@ -62,6 +62,7 @@ interface GameStore {
   prompt: string | null
   ceremony: { title: string; subtitle: string; onClose?: () => void } | null
   nextSpawn: { x: number; z: number; heading: number } | null
+  teaching: { songId: string } | null
 
   // actions
   setScene: (s: SceneId) => void
@@ -87,6 +88,7 @@ interface GameStore {
   showCeremony: (title: string, subtitle: string, onClose?: () => void) => void
   closeCeremony: () => void
   setNextSpawn: (s: { x: number; z: number; heading: number } | null) => void
+  setTeaching: (songId: string | null) => void
   saveGame: () => void
   loadGame: () => boolean
   newGame: () => void
@@ -119,6 +121,7 @@ export const useGame = create<GameStore>((set, get) => ({
   prompt: null,
   ceremony: null,
   nextSpawn: null,
+  teaching: null,
 
   setScene: (scene) => {
     set({ scene, dialogue: null, ocarinaOpen: false, paused: false, prompt: null })
@@ -216,6 +219,7 @@ export const useGame = create<GameStore>((set, get) => ({
     c?.onClose?.()
   },
   setNextSpawn: (nextSpawn) => set({ nextSpawn }),
+  setTeaching: (songId) => set({ teaching: songId ? { songId } : null }),
 
   saveGame: () => {
     const s = get()

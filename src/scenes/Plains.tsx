@@ -8,6 +8,7 @@ import { FollowCamera } from '../game/Camera'
 import { Gravy } from '../game/Gravy'
 import { Pickups } from '../game/Pickups'
 import { ExitTrigger } from '../game/props'
+import { SlimeRain } from '../game/SlimeRain'
 import { useGame } from '../state/store'
 
 const ROCKS: [number, number, number][] = [
@@ -59,6 +60,7 @@ export function PlainsScene() {
         spawn={{ x: 0, z: 19, heading: Math.PI }}
       />
 
+      <SlimeRain />
       <Pickups />
       <Gravy />
       <Player />

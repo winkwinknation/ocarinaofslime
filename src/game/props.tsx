@@ -8,6 +8,7 @@ import type { DialogueLine, SceneId } from '../state/store'
 import { sfx } from '../audio/notes'
 import { dropLoot } from './Pickups'
 import { dlg } from '../content/dialogue'
+import * as events from './events'
 
 let uid = 0
 const nextUid = () => `prop-${++uid}`
@@ -204,11 +205,11 @@ export function GossipStone({ id, x, z }: { id: string; x: number; z: number }) 
     }
   }, [id, x, z])
 
-  // dance when the Song of Squelch plays (events wired via window custom flag)
-  useFrame((state) => {
+  // gossip stones dance when the Song of Squelch plays
+  useFrame((state, dt) => {
     const t = state.clock.elapsedTime
     if (dance.current > 0) {
-      dance.current -= 1 / 60
+      dance.current -= dt
       root.current.rotation.z = Math.sin(t * 10) * 0.25
       root.current.position.y = Math.abs(Math.sin(t * 10)) * 0.3
     } else {
@@ -217,13 +218,13 @@ export function GossipStone({ id, x, z }: { id: string; x: number; z: number }) 
     }
   })
 
-  useEffect(() => {
-    const onDance = () => {
-      dance.current = 4
-    }
-    window.addEventListener('gossip-dance', onDance)
-    return () => window.removeEventListener('gossip-dance', onDance)
-  }, [])
+  useEffect(
+    () =>
+      events.on('song', (songId) => {
+        if (songId === 'squelch') dance.current = 5
+      }),
+    [],
+  )
 
   return (
     <group position={[x, 0, z]}>
@@ -300,10 +301,12 @@ export function Mailbox({ x, z }: { x: number; z: number }) {
         sfx.blip()
         if (!g.items.ocarina) {
           g.say(dlg.mailNoOcarina)
+        } else if (!g.songs.includes('lullaby')) {
+          g.say(dlg.letter, () => events.emit('teach-song', 'lullaby'))
         } else {
-          g.say(dlg.letter, () => {
-            window.dispatchEvent(new CustomEvent('teach-song', { detail: 'lullaby' }))
-          })
+          g.say([
+            { name: 'Mailbox', text: 'No new mail. The princess is busy being mysterious.' },
+          ])
         }
       },
     })
