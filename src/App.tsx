@@ -9,6 +9,8 @@ import { TitleScene } from './scenes/Title'
 import { VillageScene } from './scenes/Village'
 import { PlainsScene } from './scenes/Plains'
 import { DungeonScene } from './scenes/Dungeon'
+import { BossScene } from './scenes/Boss'
+import { EndingScene } from './scenes/Ending'
 import { TitleUI } from './ui/TitleUI'
 import { IntroUI } from './ui/IntroUI'
 import { HUD } from './ui/HUD'
@@ -17,7 +19,10 @@ import { PauseMenu } from './ui/PauseMenu'
 import { ChestCeremony } from './ui/ChestCeremony'
 import { OcarinaOverlay } from './ui/OcarinaOverlay'
 import { FishingUI } from './ui/FishingUI'
+import { EndingUI } from './ui/EndingUI'
+import { CreditsUI } from './ui/CreditsUI'
 import { TouchControls } from './input/TouchControls'
+import { setBGM, toggleMute } from './audio/bgm'
 import * as events from './game/events'
 
 const GAMEPLAY: SceneId[] = ['village', 'plains', 'dungeon', 'boss']
@@ -35,6 +40,12 @@ function SceneView() {
       return <PlainsScene />
     case 'dungeon':
       return <DungeonScene />
+    case 'boss':
+      return <BossScene />
+    case 'ending':
+      return <EndingScene />
+    case 'credits':
+      return null
     default:
       return <VillageScene />
   }
@@ -63,6 +74,21 @@ export default function App() {
   const scene = useGame((s) => s.scene)
   const setTouchMode = useGame((s) => s.setTouchMode)
   const inGame = GAMEPLAY.includes(scene)
+
+  // BGM follows the scene; M mutes
+  useEffect(() => {
+    setBGM(scene)
+  }, [scene])
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() === 'm') {
+        const muted = toggleMute()
+        useGame.getState().showToast(muted ? '🔇 music muted (M)' : '🔊 music on')
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
 
   // song-teaching requests open the ocarina in teach mode
   useEffect(
@@ -104,6 +130,8 @@ export default function App() {
       <div className="ui-layer">
         {scene === 'title' && <TitleUI />}
         {scene === 'intro' && <IntroUI />}
+        {scene === 'ending' && <EndingUI />}
+        {scene === 'credits' && <CreditsUI />}
         {inGame && (
           <>
             <HUD />

@@ -187,6 +187,42 @@ export const dlg = {
     L('Sketchy Slime', "it's in your CHEAT-O-PEDIA now (pause menu). you didn't hear it from me. you heard it from me."),
   ],
 
+  // ---------- Dungeon ----------
+  dungeonEntry: [
+    L('Gravy', "HEY! LISTEN! We're INSIDE the Gunk Tree now. It smells like a gym sock's origin story."),
+    L('Gravy', 'The sickness is deeper in. Past the angry ones. And the door. And the webs. ...This tree has a LAYOUT, okay?'),
+  ],
+  combatCleared: '🚪 Somewhere, a vine gate un-vines itself.',
+  gunkDoorHint: [
+    L('Sealed Gunk Door', 'A massive door of hardened gunk. It is... asleep? It snores in chords.'),
+    L('Sealed Gunk Door', "There's royal sheet music scrawled beside it: 'Only the family lullaby soothes it open. — R.'"),
+  ],
+  gunkDoorOpen: '🎵 The door yawns, stretches, and politely un-exists.',
+  webDrop: '🕸 The web was load-bearing. WAS.',
+  chute: [
+    L('Gunk Chute', "A fleshy chute labeled 'EXIT (emergencies & cowardice)'. Ride it back to the entrance?"),
+  ],
+  bossDoor: [
+    L('Ominous Door', "Behind this door: the source of the sickness. Something enormous. Something with ONE big eye. Something... moist."),
+    L('Gravy', "HEY! LISTEN! Boss fight! Whack the eye when it's open! That's the whole strategy! I believe in you, like, 60%!"),
+  ],
+
+  // ---------- Boss ----------
+  bossIntro: [
+    L('???', 'BLURBLE BLURBLE BLORP.'),
+    L('Queen Goohma', 'TRANSLATION: WHO DARES ENTER MY GUNK? I, QUEEN GOOHMA, PARASITE MONARCH, EYEBALL SUPREME—'),
+    L('Gravy', "HEY! LISTEN! She's monologuing! Get ready!"),
+    L('Queen Goohma', '—RUDE. I WAS NOT DONE. ANYWAY: PERISH.'),
+  ],
+  bossStun: '👁 THE EYE IS OPEN! WHACK IT!!',
+  bossPhase2: 'Queen Goohma is 33% less moist. She is FURIOUS about it.',
+  bossPhase3: 'Queen Goohma is dangerously dry. One more eye-whack ought to do it!',
+  bossDefeat: [
+    L('Queen Goohma', 'BLORP... blorp... how... defeated... by a DAMP CHILD...'),
+    L('Queen Goohma', 'tell my 4,000 babies... they were... mid.'),
+    L('Gravy', 'HEY! LISTEN! YOU DID IT!! The Gunk Tree is saved! Probably! Trees are slow!'),
+  ],
+
   // ---------- System / misc ----------
   signVillage: [
     L('Sign', '⬆ NORTH: Sloshy Plains, Great Gunk Tree, adventure, danger\n⬇ SOUTH: your bed (tempting)'),

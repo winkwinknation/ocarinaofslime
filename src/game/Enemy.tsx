@@ -7,6 +7,7 @@ import { resolveCollisions } from './collision'
 import { useGame } from '../state/store'
 import { sfx } from '../audio/notes'
 import { dropLoot } from './Pickups'
+import { on as eventsOn } from './events'
 
 export type GelKind = 'gel' | 'big' | 'dungeon'
 
@@ -188,8 +189,17 @@ function Gel({
   )
 }
 
-export function Enemies({ spawns }: { spawns: GelSpec[] }) {
+export function Enemies({
+  spawns,
+  onAllDead,
+}: {
+  spawns: GelSpec[]
+  onAllDead?: () => void
+}) {
   const [list, setList] = useState(spawns)
+  const announced = useRef(spawns.length === 0)
+  const onAllDeadRef = useRef(onAllDead)
+  onAllDeadRef.current = onAllDead
 
   const kill = (key: string, splitInto?: GelSpec[]) => {
     setList((l) => {
@@ -198,6 +208,23 @@ export function Enemies({ spawns }: { spawns: GelSpec[] }) {
       return out
     })
   }
+
+  // bosses (and pranks) can inject extra gels mid-scene
+  useEffect(
+    () =>
+      eventsOn('spawn-gels', (specs) => {
+        announced.current = false
+        setList((l) => [...l, ...(specs as GelSpec[])])
+      }),
+    [],
+  )
+
+  useEffect(() => {
+    if (list.length === 0 && !announced.current) {
+      announced.current = true
+      onAllDeadRef.current?.()
+    }
+  }, [list.length])
 
   return (
     <>
