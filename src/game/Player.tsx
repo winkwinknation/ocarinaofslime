@@ -66,7 +66,9 @@ export function Player() {
       const speed = WALK_SPEED * player.speedMul * zoom * (player.rollTimer > 0 ? 1.8 : 1)
 
       if (player.moving) {
-        const target = Math.atan2(mv.x, mv.y) + cam.yaw
+        // -mv.x: with the camera looking down +z, screen-right is world -x
+        // (right-handed coords), so input x must be mirrored to feel correct
+        const target = Math.atan2(-mv.x, mv.y) + cam.yaw
         // ease heading toward target (snappy but smooth)
         const d = angleDiff(target, player.heading)
         player.heading += d * Math.min(1, dt * 14)
