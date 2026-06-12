@@ -50,7 +50,9 @@ export function FollowCamera({ dist = 6.2, height = 3.4 }: { dist?: number; heig
       )
     }
     camera.lookAt(look.current)
-  }, 1)
+    // NOTE: no positive priority here — useFrame(cb, n>0) switches R3F to manual
+    // rendering and freezes the canvas. Runs after Player by mount order instead.
+  })
 
   return null
 }
