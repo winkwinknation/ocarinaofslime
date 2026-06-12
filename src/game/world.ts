@@ -82,4 +82,7 @@ export function spawnPlayer(x: number, z: number, heading = 0) {
   player.attackTimer = 0
   player.rollTimer = 0
   player.invulnTimer = 0
+  player.riding = false
+  player.speedMul = 1
+  player.kbTimer = 0
 }

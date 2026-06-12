@@ -38,6 +38,7 @@ export function Player() {
       g.ocarinaOpen ||
       g.paused ||
       g.ceremony !== null ||
+      g.fishingActive ||
       g.scene === 'title' ||
       player.frozen
 
@@ -129,14 +130,22 @@ export function Player() {
         }
       }
 
-      if (consume('roll') && player.rollTimer <= 0 && !player.riding) {
-        player.rollTimer = ROLL_TIME
-        sfx.hop()
+      if (consume('roll')) {
+        if (player.riding) {
+          // dismount
+          player.riding = false
+          player.speedMul = 1
+          sfx.squish()
+        } else if (player.rollTimer <= 0) {
+          player.rollTimer = ROLL_TIME
+          sfx.hop()
+        }
       }
     }
 
     // ----- visuals -----
-    const hop = player.moving ? Math.abs(Math.sin(player.bounce)) * 0.22 : 0
+    let hop = player.moving ? Math.abs(Math.sin(player.bounce)) * 0.22 : 0
+    if (player.riding) hop = 0.95 + (player.moving ? Math.abs(Math.sin(player.bounce)) * 0.18 : 0)
     root.current.position.set(player.pos.x, hop, player.pos.z)
     root.current.rotation.y = player.heading
 
@@ -183,7 +192,7 @@ export function Player() {
     headGroup.current.scale.setScalar(headScale)
 
     // moon gravity: extra floaty hop
-    if (g.cheats.moon && player.moving) {
+    if (g.cheats.moon && player.moving && !player.riding) {
       root.current.position.y = Math.abs(Math.sin(player.bounce * 0.5)) * 1.4
     }
   })

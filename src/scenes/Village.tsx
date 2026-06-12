@@ -216,7 +216,7 @@ export function VillageScene() {
       <Mailbox x={1.2} z={-12.5} />
       <Sign id="village" x={1.8} z={6} lines={dlg.signVillage} />
       <GossipStone id="village1" x={-18} z={-17} />
-      <GossipStone id="village2" x={16.5} z={12.5} />
+      <GossipStone id="village2" x={16.5} z={12.5} leak="bighead" />
 
       {/* ---------- NPCs ---------- */}
       <NPC

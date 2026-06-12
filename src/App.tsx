@@ -8,6 +8,7 @@ import { GameSystems } from './game/GameSystems'
 import { TitleScene } from './scenes/Title'
 import { VillageScene } from './scenes/Village'
 import { PlainsScene } from './scenes/Plains'
+import { DungeonScene } from './scenes/Dungeon'
 import { TitleUI } from './ui/TitleUI'
 import { IntroUI } from './ui/IntroUI'
 import { HUD } from './ui/HUD'
@@ -15,6 +16,7 @@ import { DialogueBox } from './ui/DialogueBox'
 import { PauseMenu } from './ui/PauseMenu'
 import { ChestCeremony } from './ui/ChestCeremony'
 import { OcarinaOverlay } from './ui/OcarinaOverlay'
+import { FishingUI } from './ui/FishingUI'
 import { TouchControls } from './input/TouchControls'
 import * as events from './game/events'
 
@@ -31,6 +33,8 @@ function SceneView() {
       return <VillageScene />
     case 'plains':
       return <PlainsScene />
+    case 'dungeon':
+      return <DungeonScene />
     default:
       return <VillageScene />
   }
@@ -107,6 +111,7 @@ export default function App() {
             <ChestCeremony />
             <TouchControls />
             <OcarinaOverlay />
+            <FishingUI />
             <PauseMenu />
           </>
         )}

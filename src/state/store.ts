@@ -63,6 +63,7 @@ interface GameStore {
   ceremony: { title: string; subtitle: string; onClose?: () => void } | null
   nextSpawn: { x: number; z: number; heading: number } | null
   teaching: { songId: string } | null
+  fishingActive: boolean
 
   // actions
   setScene: (s: SceneId) => void
@@ -89,6 +90,7 @@ interface GameStore {
   closeCeremony: () => void
   setNextSpawn: (s: { x: number; z: number; heading: number } | null) => void
   setTeaching: (songId: string | null) => void
+  setFishing: (v: boolean) => void
   saveGame: () => void
   loadGame: () => boolean
   newGame: () => void
@@ -122,6 +124,7 @@ export const useGame = create<GameStore>((set, get) => ({
   ceremony: null,
   nextSpawn: null,
   teaching: null,
+  fishingActive: false,
 
   setScene: (scene) => {
     set({ scene, dialogue: null, ocarinaOpen: false, paused: false, prompt: null })
@@ -220,6 +223,10 @@ export const useGame = create<GameStore>((set, get) => ({
   },
   setNextSpawn: (nextSpawn) => set({ nextSpawn }),
   setTeaching: (songId) => set({ teaching: songId ? { songId } : null }),
+  setFishing: (fishingActive) => {
+    set({ fishingActive })
+    if (!fishingActive) clearPresses()
+  },
 
   saveGame: () => {
     const s = get()

@@ -115,15 +115,18 @@ export const dlg = {
     ],
     village2: [
       L('Gossip Stone', "They say if you say 'Slimetendo' three times in a mirror, a lawyer appears. A LEGALLY DISTINCT lawyer."),
+      L('Gossip Stone', 'They also say: ▲ Ⓐ ▲ Ⓐ ▼ ▼ on an ocarina does something... to heads. The stone giggles.'),
     ],
     plains1: [
       L('Gossip Stone', 'They say the horse is just three slimes in a horse costume. The horse denies this. All three of her.'),
+      L('Gossip Stone', 'P.S. from the moon: ▲ ◄ ► ▼ Ⓐ Ⓐ. Gravity is more of a guideline anyway.'),
     ],
     plains2: [
       L('Gossip Stone', "They say the fish in that pond aren't fish. They never elaborate. Nobody asks."),
     ],
     dungeon1: [
       L('Gossip Stone', "They say the dungeon's interior decorator quit halfway through. The webs are load-bearing now."),
+      L('Gossip Stone', 'Also overheard: ◄ ◄ Ⓐ ◄ ◄ Ⓐ. Whoever plays it ruins the economy. Worth it.'),
     ],
     dungeon2: [
       L('Gossip Stone', 'They say Queen Goohma has a giant glowing weak point. They say hitting it causes massive damage. Revolutionary stuff.'),
@@ -150,6 +153,39 @@ export const dlg = {
     title: 'You got a SINGLE GLOOPEE!',
     subtitle: 'The chest ceremony cost more than the contents. Classic.',
   },
+
+  // ---------- Old Mackerel (fisherman, teaches Song of Squelch) ----------
+  mackerelFirst: [
+    L('Old Mackerel', "Ah, a fellow angler. I can tell by your... hm. I can tell by nothing. You've never fished."),
+    L('Old Mackerel', "This pond holds LEGENDS, kid. The Gunkfish. The Boot. Something called a 'Fish-Shaped Object' that the lab refuses to discuss."),
+    L('Old Mackerel', "Here's a pro secret: fish bite instantly when it rains slime. Let me teach you the weather. Yes, TEACH you the WEATHER."),
+  ],
+  mackerelAfter: [
+    L('Old Mackerel', 'Cast at the pond edge over there. Big one gets you something special. I can feel it in my goo.'),
+    L('Old Mackerel', "Remember: Song of Squelch = instant bites. I am legally required to say I don't control the fish."),
+  ],
+  mackerelNoOcarina: [
+    L('Old Mackerel', "I'd teach you my secret fishing song, but you've got no instrument. Come back when you're musical."),
+  ],
+
+  // ---------- Sketchy Slime (cheat hint vendor) ----------
+  sketchyIntro: [
+    L('Sketchy Slime', 'psst. hey. HEY, kid. over here. you look like someone who wants... forbidden knowledge.'),
+    L('Sketchy Slime', "i sell GameShark-But-Legally-Distinct hints. secret songs. REAL cheats. the devs don't want you to know. (the dev wrote me. it's complicated.)"),
+    L('Sketchy Slime', 'twenty gloopees per secret. no refunds. no receipts. no eye contact.'),
+  ],
+  sketchyBroke: [
+    L('Sketchy Slime', "that's not twenty gloopees. i counted. counting is the one thing i'm legit about."),
+  ],
+  sketchySoldOut: [
+    L('Sketchy Slime', "...you've bought everything. my whole catalog. you know all my secrets and i feel so exposed."),
+    L('Sketchy Slime', 'check the CHEAT-O-PEDIA in your pause menu. now please. let me lurk in peace.'),
+  ],
+  sketchyReveal: (name: string, notes: string) => [
+    L('Sketchy Slime', `*looks both ways* okay. listen close. "${name}". the notes are:`),
+    L('Sketchy Slime', `${notes}`),
+    L('Sketchy Slime', "it's in your CHEAT-O-PEDIA now (pause menu). you didn't hear it from me. you heard it from me."),
+  ],
 
   // ---------- System / misc ----------
   signVillage: [

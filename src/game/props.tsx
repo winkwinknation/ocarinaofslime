@@ -174,7 +174,18 @@ export function Chest({
 }
 
 // ---------- Gossip Stone ----------
-export function GossipStone({ id, x, z }: { id: string; x: number; z: number }) {
+export function GossipStone({
+  id,
+  x,
+  z,
+  leak,
+}: {
+  id: string
+  x: number
+  z: number
+  /** cheat song id this stone leaks — marks it found in the Cheat-o-pedia */
+  leak?: string
+}) {
   const dance = useRef(0)
   const root = useRef<THREE.Group>(null!)
 
@@ -190,8 +201,14 @@ export function GossipStone({ id, x, z }: { id: string; x: number; z: number }) 
         const g = useGame.getState()
         sfx.blip()
         g.say(dlg.gossip[id] ?? [{ name: 'Gossip Stone', text: '...' }], () => {
-          const before = g.gossipFound.length
-          g.foundGossip(id)
+          const s = useGame.getState()
+          const before = s.gossipFound.length
+          s.foundGossip(id)
+          if (leak && !s.flags[`found-${leak}`]) {
+            s.setFlag(`found-${leak}`)
+            s.showToast('📖 Cheat-o-pedia updated! (pause menu)')
+            s.saveGame()
+          }
           const after = useGame.getState().gossipFound.length
           if (after === 6 && before === 5) {
             sfx.songFanfare()
@@ -203,7 +220,7 @@ export function GossipStone({ id, x, z }: { id: string; x: number; z: number }) 
     return () => {
       interactables.delete(key)
     }
-  }, [id, x, z])
+  }, [id, x, z, leak])
 
   // gossip stones dance when the Song of Squelch plays
   useFrame((state, dt) => {
