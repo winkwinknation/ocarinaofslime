@@ -72,12 +72,29 @@ export function PlainsScene() {
       circle(POND.x, POND.z, POND.r - 0.6), // can't walk on water (it's barely water)
       circle(9, 1.5, 0.55), // Old Mackerel
       circle(-19, -22, 0.55), // Sketchy Slime
+      circle(-4.5, -6, 0.4), // horse-shaped sign
     ]
     setColliders(walls)
     const g = useGame.getState()
     const sp = g.nextSpawn ?? { x: 0, z: -23, heading: 0 }
     g.setNextSpawn(null)
     spawnPlayer(sp.x, sp.z, sp.heading)
+
+    // the horse-shaped sign teaches Sloshpona's Song
+    interactables.set('horse-sign', {
+      id: 'horse-sign',
+      x: -4.5,
+      z: -6,
+      radius: 1.8,
+      label: 'Read the horse-shaped sign',
+      onInteract: () => {
+        const g = useGame.getState()
+        if (!g.items.ocarina) g.say(dlg.horseSignNoOcarina)
+        else if (!g.songs.includes('sloshpona'))
+          g.say(dlg.horseSign, () => events.emit('teach-song', 'sloshpona'))
+        else g.say(dlg.horseSignAfter)
+      },
+    })
 
     // fishing spot
     interactables.set('fish-spot', {
@@ -147,6 +164,40 @@ export function PlainsScene() {
           },
         ]}
       />
+
+      {/* the horse-shaped sign (it's a sign, shaped like a horse) */}
+      <group position={[-4.5, 0, -6]} rotation={[0, 0.5, 0]}>
+        <mesh position={[0, 0.5, 0]}>
+          <cylinderGeometry args={[0.06, 0.08, 1, 6]} />
+          <meshToonMaterial color="#6b4226" />
+        </mesh>
+        {/* horse-silhouette board: body + neck + head + ears */}
+        <mesh position={[0, 1.1, 0]}>
+          <boxGeometry args={[1.0, 0.45, 0.08]} />
+          <meshToonMaterial color="#8a5a2b" />
+        </mesh>
+        <mesh position={[0.45, 1.45, 0]} rotation={[0, 0, -0.4]}>
+          <boxGeometry args={[0.22, 0.5, 0.08]} />
+          <meshToonMaterial color="#8a5a2b" />
+        </mesh>
+        <mesh position={[0.62, 1.62, 0]}>
+          <boxGeometry args={[0.34, 0.18, 0.08]} />
+          <meshToonMaterial color="#8a5a2b" />
+        </mesh>
+        <mesh position={[0.52, 1.78, 0]}>
+          <coneGeometry args={[0.05, 0.14, 4]} />
+          <meshToonMaterial color="#6b4226" />
+        </mesh>
+        {/* board legs (the horse has legs. it's a thorough sign) */}
+        <mesh position={[-0.3, 0.78, 0]}>
+          <boxGeometry args={[0.1, 0.25, 0.08]} />
+          <meshToonMaterial color="#8a5a2b" />
+        </mesh>
+        <mesh position={[0.3, 0.78, 0]}>
+          <boxGeometry args={[0.1, 0.25, 0.08]} />
+          <meshToonMaterial color="#8a5a2b" />
+        </mesh>
+      </group>
 
       {/* fishing rod marker at the spot */}
       <group position={[POND.x - POND.r + 0.6, 0, POND.z - 1]}>

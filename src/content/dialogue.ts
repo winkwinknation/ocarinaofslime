@@ -168,6 +168,18 @@ export const dlg = {
     L('Old Mackerel', "I'd teach you my secret fishing song, but you've got no instrument. Come back when you're musical."),
   ],
 
+  // ---------- Horse-shaped sign (teaches Sloshpona's Song) ----------
+  horseSignNoOcarina: [
+    L('Horse-Shaped Sign', 'This sign is shaped like a horse. There is sheet music carved into it. You cannot play sheet music with your hands, Glink.'),
+  ],
+  horseSign: [
+    L('Horse-Shaped Sign', 'This sign is shaped like a horse. Carved into it: "SLOSHPONA — she comes when called. Probably. No refunds. — the management"'),
+    L('Horse-Shaped Sign', "Below that, scratched in with what appears to be a hoof: sheet music titled 'Sloshpona's Song'."),
+  ],
+  horseSignAfter: [
+    L('Horse-Shaped Sign', 'The sign has nothing more to teach you. It is, after all, a sign.'),
+  ],
+
   // ---------- Sketchy Slime (cheat hint vendor) ----------
   sketchyIntro: [
     L('Sketchy Slime', 'psst. hey. HEY, kid. over here. you look like someone who wants... forbidden knowledge.'),
