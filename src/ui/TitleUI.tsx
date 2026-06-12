@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useGame, hasSave } from '../state/store'
 import { sfx } from '../audio/notes'
+import { enterFullscreen } from './fullscreen'
 
 export function TitleUI() {
   const [phase, setPhase] = useState<'press' | 'menu'>('press')
@@ -14,6 +15,9 @@ export function TitleUI() {
 
   function start(option: string) {
     sfx.menuSelect()
+    // on touch devices, go fullscreen so the browser UI stops eating the screen
+    // (no-op on iPhone Safari, which has no Fullscreen API)
+    if (useGame.getState().touchMode) enterFullscreen()
     if (option === 'CONTINUE') {
       if (!loadGame()) {
         newGame()

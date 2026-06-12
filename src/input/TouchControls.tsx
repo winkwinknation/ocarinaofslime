@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { stick, press } from './input'
 import { useGame } from '../state/store'
+import { toggleFullscreen } from '../ui/fullscreen'
 
 const STICK_RANGE = 55 // px to full deflection
 
@@ -28,12 +29,16 @@ export function TouchControls() {
 
   const onDown = (e: React.PointerEvent) => {
     if (anchor.current.id !== -1) return
-    anchor.current = { x: e.clientX, y: e.clientY, id: e.pointerId }
+    // clamp the anchor so the base circle never draws offscreen
+    const m = 64
+    const ax = Math.min(Math.max(e.clientX, m), window.innerWidth - m)
+    const ay = Math.min(Math.max(e.clientY, m), window.innerHeight - m)
+    anchor.current = { x: ax, y: ay, id: e.pointerId }
     ;(e.target as HTMLElement).setPointerCapture(e.pointerId)
     stick.active = true
     stick.x = 0
     stick.y = 0
-    showStick(e.clientX, e.clientY, e.clientX, e.clientY, true)
+    showStick(ax, ay, ax, ay, true)
   }
   const onMove = (e: React.PointerEvent) => {
     if (e.pointerId !== anchor.current.id) return
@@ -66,16 +71,19 @@ export function TouchControls() {
   return (
     <div className="touch-layer">
       {!paused && (
-        <div
-          className="stick-zone"
-          onPointerDown={onDown}
-          onPointerMove={onMove}
-          onPointerUp={onUp}
-          onPointerCancel={onUp}
-        >
+        <>
+          <div
+            className="stick-zone"
+            onPointerDown={onDown}
+            onPointerMove={onMove}
+            onPointerUp={onUp}
+            onPointerCancel={onUp}
+          />
+          {/* visuals live in the full-viewport layer (NOT the zone) so the
+              client coords used to place them line up 1:1 */}
           <div ref={baseRef} className="stick-base" style={{ display: 'none' }} />
           <div ref={knobRef} className="stick-knob" style={{ display: 'none' }} />
-        </div>
+        </>
       )}
       {!paused && (
         <>
@@ -94,6 +102,9 @@ export function TouchControls() {
       )}
       <button className="btn-pause" onPointerDown={() => press('pause')}>
         ☰
+      </button>
+      <button className="btn-fullscreen" onPointerDown={toggleFullscreen}>
+        ⛶
       </button>
     </div>
   )

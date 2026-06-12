@@ -418,6 +418,40 @@
   font-size: 16px;
   pointer-events: auto;
 }
+.btn-fullscreen {
+  position: absolute;
+  top: max(10px, env(safe-area-inset-top));
+  right: calc(50% + 56px);
+  transform: translateX(50%);
+  width: 44px;
+  height: 32px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.35);
+  color: white;
+  font-size: 16px;
+  pointer-events: auto;
+}
+
+/* touch devices: browser chrome crowds the top edge, so push the HUD down */
+@media (pointer: coarse) {
+  .hud-hearts {
+    top: max(20px, env(safe-area-inset-top));
+  }
+  .hud-gloopees {
+    top: max(50px, calc(env(safe-area-inset-top) + 30px));
+  }
+  .hud-hey {
+    top: max(20px, env(safe-area-inset-top));
+  }
+  .hud-cheats {
+    top: max(78px, calc(env(safe-area-inset-top) + 58px));
+  }
+  .btn-pause,
+  .btn-fullscreen {
+    top: max(18px, env(safe-area-inset-top));
+  }
+}
 
 /* ---------- Ocarina overlay ---------- */
 .ocarina-overlay {
