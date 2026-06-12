@@ -4,3 +4,4 @@ dist
 tmp-shots
 *.local
 .DS_Store
+tmp-preview.log
