@@ -138,8 +138,8 @@ export default function App() {
             <DialogueBox />
             <ChestCeremony />
             <TouchControls />
-            <OcarinaOverlay />
             <FishingUI />
+            <OcarinaOverlay />
             <PauseMenu />
           </>
         )}

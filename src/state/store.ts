@@ -174,13 +174,18 @@ export const useGame = create<GameStore>((set, get) => ({
 
   heal: (n) => set((s) => ({ hearts: Math.min(s.maxHearts, s.hearts + n) })),
 
-  addMaxHeart: () =>
+  addMaxHeart: () => {
     set((s) => {
       const maxHearts = Math.min(5, s.maxHearts + 1)
       return { maxHearts, hearts: maxHearts }
-    }),
+    })
+    get().saveGame()
+  },
 
-  giveItem: (id) => set((s) => ({ items: { ...s.items, [id]: true } })),
+  giveItem: (id) => {
+    set((s) => ({ items: { ...s.items, [id]: true } }))
+    get().saveGame()
+  },
 
   learnSong: (id) =>
     set((s) => (s.songs.includes(id) ? s : { songs: [...s.songs, id] })),
@@ -209,8 +214,10 @@ export const useGame = create<GameStore>((set, get) => ({
     if (get().prompt !== prompt) set({ prompt })
   },
 
-  foundGossip: (id) =>
-    set((s) => (s.gossipFound.includes(id) ? s : { gossipFound: [...s.gossipFound, id] })),
+  foundGossip: (id) => {
+    set((s) => (s.gossipFound.includes(id) ? s : { gossipFound: [...s.gossipFound, id] }))
+    get().saveGame()
+  },
 
   setRecordFish: (cm) => set((s) => ({ recordFish: Math.max(s.recordFish, cm) })),
 

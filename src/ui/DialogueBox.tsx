@@ -52,10 +52,16 @@ export function DialogueBox() {
   }
 
   return (
-    <div className="dialogue-box" onPointerDown={step}>
-      <div className="dialogue-name">{line.name}</div>
-      <div className="dialogue-text">{line.text.slice(0, chars)}</div>
-      <div className="dialogue-more">{done ? '▼' : ''}</div>
+    // full-screen catcher so taps anywhere advance (mobile thumbs are imprecise)
+    <div
+      style={{ position: 'absolute', inset: 0, pointerEvents: 'auto' }}
+      onPointerDown={step}
+    >
+      <div className="dialogue-box">
+        <div className="dialogue-name">{line.name}</div>
+        <div className="dialogue-text">{line.text.slice(0, chars)}</div>
+        <div className="dialogue-more">{done ? '▼' : ''}</div>
+      </div>
     </div>
   )
 }

@@ -243,8 +243,8 @@ export function DungeonScene() {
     <>
       <color attach="background" args={['#1d1828']} />
       <fog attach="fog" args={['#1d1828', 12, 36]} />
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[3, 10, 2]} intensity={0.5} color="#9be564" />
+      <ambientLight intensity={0.65} />
+      <directionalLight position={[3, 10, 2]} intensity={0.7} color="#9be564" />
 
       {/* gunk floor */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.02, 6]}>

@@ -34,7 +34,17 @@ export function Gravy() {
         heyTimer.current = 16 + Math.random() * 22
         sfx.hey()
         g.hey()
-        g.showToast(g.cheats.rae ? '🧚 HEY! LISTEN! ...your majesty.' : dlg.heyListen)
+        const r = Math.random()
+        const line = g.cheats.rae
+          ? '🧚 HEY! LISTEN! ...your majesty.'
+          : r < 0.7
+            ? dlg.heyListen
+            : r < 0.8
+              ? '🧚 HEY! LISTEN! ...I forgot why.'
+              : r < 0.9
+                ? '🧚 HEY! LISTEN! The counter only goes up, you know.'
+                : '🧚 HEY! LISTEN! (contractually obligated)'
+        g.showToast(line)
       }
     }
   })

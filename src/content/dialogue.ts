@@ -99,7 +99,7 @@ export const dlg = {
   // ---------- Mailbox / Raelda's letter ----------
   mailNoOcarina: [
     L('Mailbox', "There's a fancy letter inside, sealed with a royal slime crest. It seems to contain... sheet music?"),
-    L('Mailbox', 'Sheet music is useless without an instrument. (Slurpia has been waving an ocarina at you this whole time.)'),
+    L('Mailbox', 'You hum it experimentally. Nothing happens. You are not the instrument, Glink. (Slurpia has been waving an ocarina at you this whole time.)'),
   ],
   letter: [
     L("Raelda's Letter", 'To the hero Glink (the prophecy said "damp one" but that felt rude),'),

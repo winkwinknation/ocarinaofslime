@@ -20,7 +20,7 @@ export function GameSystems() {
     if (consume('ocarina')) {
       if (g.ocarinaOpen) {
         g.setOcarinaOpen(false)
-      } else if (inGame && g.items.ocarina && !g.dialogue && !g.paused) {
+      } else if (inGame && g.items.ocarina && !g.dialogue && !g.paused && !g.ceremony) {
         g.setOcarinaOpen(true)
       }
     }

@@ -198,6 +198,8 @@ export function FishingUI() {
   useEffect(() => {
     if (!active) return
     const onKey = (e: KeyboardEvent) => {
+      // the ocarina overlay may sit on top (to play Squelch mid-wait) — it owns keys then
+      if (useGame.getState().ocarinaOpen) return
       const k = e.key.toLowerCase()
       if (k === ' ' || k === 'e' || k === 'enter') {
         e.preventDefault()

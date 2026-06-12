@@ -166,6 +166,11 @@ export function Player() {
       sy = 0.55
       sxz = 1.3
     }
+    // zoomies: motion-blur-ish speed squish
+    if (g.cheats.zoomies && player.moving) {
+      sy *= 0.82
+      sxz *= 1.18
+    }
     squash.current.scale.set(sxz, sy, sxz)
 
     // sword swing: pivot sweeps -80° → +80°
